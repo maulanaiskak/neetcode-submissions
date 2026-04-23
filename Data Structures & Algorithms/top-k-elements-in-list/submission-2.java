@@ -1,0 +1,21 @@
+class Solution {
+    public int[] topKFrequent(int[] nums, int k) {
+        var freq = new HashMap<Integer, Integer>();
+
+        for (var num : nums) {
+            freq.put(num, freq.getOrDefault(num, 0) + 1);
+        }
+
+        var minHeap = new PriorityQueue<Integer>(Comparator.comparingInt(freq::get));
+
+        for (var key : freq.keySet()) {
+            minHeap.add(key);
+
+            if (minHeap.size() > k) {
+                minHeap.poll();
+            }
+        }
+
+        return minHeap.stream().mapToInt(Integer::intValue).toArray();
+    }
+}
