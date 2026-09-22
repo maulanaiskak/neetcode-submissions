@@ -1,0 +1,24 @@
+class Solution {
+    public int[][] kClosest(int[][] points, int k) {
+        var maxHeap = new PriorityQueue<int[]>((a, b) -> distance(b) - distance(a));
+
+        for (int[] point : points) {
+            maxHeap.offer(point);
+
+            if (maxHeap.size() > k) {
+                maxHeap.poll();
+            }
+        }
+
+        int[][] result = new int[k][];
+        for (int i = 0; i < k; i++) {
+            result[i] = maxHeap.poll();
+        }
+
+        return result;
+    }
+
+    private int distance(int[] point) {
+        return point[0] * point[0] + point[1] * point[1];
+    }
+}
